@@ -6,8 +6,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -20,7 +22,8 @@ class Demo99ApplicationTests {
 	@Test
 	public void getAllEmployees() throws Exception {
 		mockMvc.perform(get("http://localhost:8080/api/v1/employee/employees")).andDo(print()).
-				andExpect(status().isOk());
+				andExpect(status().isOk()).
+				andExpect(jsonPath("$.*", hasSize(3)));
 	}
 
 }
